@@ -1,0 +1,33 @@
+.container-fluid {
+    padding: 0px;
+}
+
+.btn-scan {
+    width: 100%;
+}
+
+.btn-option {
+    width: 100%;
+}
+
+.padding-5 {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.input-ip {
+    width: 100%;
+    color: #1a0101;
+}
+
+.navbar-brand {
+    margin-right: 0px;
+}
+
+.head-3, .head-2 {
+    width: 20%;
+}
+
+.head-1 {
+    width: 60%;
+}
