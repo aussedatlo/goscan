@@ -14,9 +14,8 @@ type App struct {
 }
 
 type navBarApp struct {
-	root   *gowd.Element
-	input  *gowd.Element
-	button *gowd.Element
+	root  *gowd.Element
+	input *gowd.Element
 }
 
 //CreateApp create application
@@ -49,10 +48,10 @@ func (a *App) createNavBar() {
 		bootstrap.NewElement("div", classNavBarDivButtonOption)
 	divButtonOption.AddElement(buttonOption)
 
-	navbar.button = bootstrap.NewButton(classNavBarButtonScan, "Scan")
-	navbar.button.OnEvent(gowd.OnClick, a.btnClicked)
+	button := bootstrap.NewButton(classNavBarButtonScan, "Scan")
+	button.OnEvent(gowd.OnClick, a.btnClicked)
 	divButtonScan := bootstrap.NewElement("div", classNavBarDivButtonScan)
-	divButtonScan.AddElement(navbar.button)
+	divButtonScan.AddElement(button)
 
 	navbar.input = bootstrap.NewInput("ip address")
 	navbar.input.SetClass(classNavBarInputIP)
