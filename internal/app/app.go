@@ -55,10 +55,10 @@ func (a *App) createNavBar() {
 		bootstrap.NewElement("div", classNavBarDivButtonOption)
 	divButtonOption.AddElement(buttonOption)
 
-	button := bootstrap.NewButton(classNavBarButtonScan, "Scan")
-	button.OnEvent(gowd.OnClick, a.btnScanClicked)
+	buttonScan := bootstrap.NewButton(classNavBarButtonScan, "Scan")
+	buttonScan.OnEvent(gowd.OnClick, a.btnScanClicked)
 	divButtonScan := bootstrap.NewElement("div", classNavBarDivButtonScan)
-	divButtonScan.AddElement(button)
+	divButtonScan.AddElement(buttonScan)
 
 	navbar.input = bootstrap.NewInput("ip address")
 	navbar.input.SetClass(classNavBarInputIP)
