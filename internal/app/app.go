@@ -9,8 +9,14 @@ import (
 type App struct {
 	root   *gowd.Element
 	main   *gowd.Element
-	table  *bootstrap.Table
 	navBar *navBarApp
+	hosts  []host
+}
+
+type host struct {
+	hostname string
+	version  string
+	platform string
 }
 
 type navBarApp struct {
@@ -24,10 +30,11 @@ func CreateApp() *App {
 	a.root = bootstrap.NewContainer(true)
 	a.main = bootstrap.NewContainer(true)
 	a.createNavBar()
-	a.createTable()
 
 	a.root.AddElement(a.navBar.root)
 	a.root.AddElement(a.main)
+
+	a.updateHosts()
 
 	return a
 }
@@ -74,40 +81,40 @@ func (a *App) createNavBar() {
 	a.navBar = navbar
 }
 
-func (a *App) printTargetsUp(l []string) {
+func (a *App) updateHosts() {
+	a.main.RemoveElements()
 
-	for _, host := range l {
-		row := a.table.AddRow()
-		p, v := getProductVersion(host)
-		row.AddCells(host, p, v)
-		a.root.Render()
-	}
-
-	a.root.Render()
-}
-
-func (a *App) createTable() {
-	a.table = bootstrap.NewTable(classMainTable)
-	e := a.table.AddHeader("Host")
+	table := bootstrap.NewTable(classMainTable)
+	a.main.AddElement(table.Element)
+	e := table.AddHeader("Host")
 	e.SetClass("head-1")
-	e = a.table.AddHeader("Product")
+	e = table.AddHeader("Product")
 	e.SetClass("head-2")
-	e = a.table.AddHeader("Version")
+	e = table.AddHeader("Version")
 	e.SetClass("head-3")
-	a.main.AddElement(a.table.Element)
-	a.root.Render()
+
+	for _, host := range a.hosts {
+		Debug("host: %s", host.hostname)
+		row := table.AddRow()
+		row.AddCells(host.hostname, host.version, host.platform)
+	}
 }
 
 func (a *App) btnClicked(sender *gowd.Element, event *gowd.EventElement) {
 	// adds a text and progress bar to the body
 	sender.SetText("Working...")
 	sender.Disable()
-	a.main.RemoveElements()
-	a.createTable()
 	a.root.Render()
-	res := getTargetsUp(a.navBar.input.GetValue())
-	a.printTargetsUp(res)
+
+	l := getTargetsUp(a.navBar.input.GetValue())
+	a.hosts = make([]host, 0)
+	for _, h := range l {
+		v, p := getProductVersion(h)
+		a.hosts = append(a.hosts,
+			host{hostname: h, version: v, platform: p})
+	}
+
+	a.updateHosts()
 	sender.SetText("Scan")
 	sender.Enable()
-	a.root.Render()
 }
