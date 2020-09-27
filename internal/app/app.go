@@ -56,7 +56,7 @@ func (a *App) createNavBar() {
 	divButtonOption.AddElement(buttonOption)
 
 	button := bootstrap.NewButton(classNavBarButtonScan, "Scan")
-	button.OnEvent(gowd.OnClick, a.btnClicked)
+	button.OnEvent(gowd.OnClick, a.btnScanClicked)
 	divButtonScan := bootstrap.NewElement("div", classNavBarDivButtonScan)
 	divButtonScan.AddElement(button)
 
@@ -100,7 +100,7 @@ func (a *App) updateHosts() {
 	}
 }
 
-func (a *App) btnClicked(sender *gowd.Element, event *gowd.EventElement) {
+func (a *App) btnScanClicked(sender *gowd.Element, event *gowd.EventElement) {
 	// adds a text and progress bar to the body
 	sender.SetText("Working...")
 	sender.Disable()
